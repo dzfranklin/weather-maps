@@ -1,0 +1,6 @@
+.env.local
+Dockerfile
+.dockerignore
+.idea
+.gitignore
+infra

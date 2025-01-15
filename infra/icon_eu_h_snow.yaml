@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: h-snow-colormap-job
+  namespace: pt
+spec:
+  schedule: "7 4 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: prepare
+              image: "ghcr.io/dzfranklin/weather-maps:latest"
+              command: [ "/weather-maps/icon_eu_h_snow.sh" ]
+              env:
+                - name: BUNNY_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: bunny
+                      key: key
+                - name: BUNNY_STORAGE_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: bunny
+                      key: storage_key
+          restartPolicy: OnFailure
