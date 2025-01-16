@@ -12,7 +12,11 @@ downloader_dwd \
     --timestamp "$(date -u '+%Y-%m-%d')T00:00:00"\
     --min-time-step 0 --max-time-step 120 --time-step-interval 24
 
-ls ./data > out/sources.txt
+ls ./data >out/sources.txt
+
+find data -name '*000_H_SNOW.grib2' -printf '%f\n' | \
+  sed -r 's/icon-eu_europe_regular-lat-lon_single-level_([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})_000_H_SNOW.grib2/Forecast updated at \1-\2-\3 \4:00:00/' \
+  >out/version_message.txt
 
 for f in ./data/*; do
   [ -e "$f" ] || continue
