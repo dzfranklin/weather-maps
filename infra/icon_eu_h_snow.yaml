@@ -19,9 +19,9 @@ spec:
                     secretKeyRef:
                       name: bunny
                       key: key
-                - name: BUNNY_STORAGE_KEY
+                - name: BUNNY_WEATHER_STORAGE_KEY
                   valueFrom:
                     secretKeyRef:
                       name: bunny
-                      key: storage_key
+                      key: weather_storage_key
           restartPolicy: OnFailure

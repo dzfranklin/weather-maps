@@ -1,6 +1,9 @@
 .env.local
+.envrc
 Dockerfile
 .dockerignore
 .idea
 .gitignore
+.git
+.github
 infra
