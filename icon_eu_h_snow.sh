@@ -18,7 +18,7 @@ run=$(find data -name '*_000_H_SNOW.grib2' -printf '%f\n' | \
             sed -r 's/icon-eu_europe_regular-lat-lon_single-level_([0-9]{10})_000_H_SNOW.grib2/\1/')
 
 runTimestamp=$(printf '%s\n' "$run" | sed -r 's/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})/\1-\2-\3T\4:00:00Z/' | xargs date +%s --date)
-printf 'Updated at %(%c %Z)T to the %(%c %Z)T model run\n' "$(date +%s)" "$runTimestamp" >out/version_message.txt
+printf 'Updated at %(%Y-%m-%d %H:%M %Z)T to the %(%Y-%m-%d %H:%M %Z)T model run\n' "$(date +%s)" "$runTimestamp" >out/version_message.txt
 
 mkdir -p out/tiles
 for f in ./data/*; do
