@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: h-snow-colormap-job
+  name: icon-eu-h-snow-job
   namespace: pt
 spec:
   schedule: "7 4 * * *"
