@@ -11,7 +11,7 @@ import dateutil
 import metview as mv
 import requests
 
-import util
+import util.colormap
 from util import bunny
 
 apiKey = os.getenv("MET_ATMOSPHERIC_API_KEY")
@@ -152,6 +152,10 @@ if __name__ == "__main__":
                 "versionMessage": versionMessage,
             }, indent=2))
 
+    legend_path = os.path.join(out_dir, "legend.html")
+    with open(legend_path, "w+") as f:
+        f.write(util.colormap.html_legend("colormap_mm_precipitation.txt"))
+
     for local_path in glob(f"{out_dir}/**/*", recursive=True):
         if local_path.endswith("/meta.json") or not os.path.isfile(local_path):
             continue
@@ -163,6 +167,8 @@ if __name__ == "__main__":
     bunny.weather_storage_upload(os.path.join(out_dir, "meta.json"),
                                  "met_scotland_daytime_average_precipitation_accumulation/meta.json")
     bunny.purge("https://plantopo-weather.b-cdn.net/met_scotland_daytime_average_precipitation_accumulation/meta.json")
+
+    bunny.purge("https://plantopo-weather.b-cdn.net/met_scotland_daytime_average_precipitation_accumulation/legend.html")
 
     bunny.weather_storage_delete_old("met_scotland_daytime_average_precipitation_accumulation/")
 

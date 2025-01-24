@@ -8,7 +8,7 @@ import sys
 import tempfile
 from datetime import datetime, timezone
 
-import util
+import util.colormap
 from util import icon_eu_tilejson_bounds, bunny
 
 if __name__ == "__main__":
@@ -93,6 +93,10 @@ if __name__ == "__main__":
     with open(meta_path, "w+") as f:
         f.write(json.dumps(meta, indent=2))
 
+    legend_path = os.path.join(out_dir, "legend.html")
+    with open(legend_path, "w+") as f:
+        f.write(util.colormap.html_legend("colormap_meters_snow.txt"))
+
     for root, _dirs, files in os.walk(run_dir):
         for fname in files:
             local_path = str(os.path.join(root, fname))
@@ -101,6 +105,9 @@ if __name__ == "__main__":
 
     bunny.weather_storage_upload(meta_path, "icon_eu_h_snow/meta.json")
     bunny.purge("https://plantopo-weather.b-cdn.net/icon_eu_h_snow/meta.json")
+
+    bunny.weather_storage_upload(legend_path, "icon_eu_h_snow/legend.html")
+    bunny.purge("https://plantopo-weather.b-cdn.net/icon_eu_h_snow/legend.html")
 
     bunny.weather_storage_delete_old("icon_eu_h_snow/")
 
