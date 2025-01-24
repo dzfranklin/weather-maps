@@ -4,9 +4,10 @@ import json
 import os
 import sys
 import tempfile
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, time
 from glob import glob
 
+import dateutil
 import metview as mv
 import requests
 
@@ -21,6 +22,9 @@ order = "plantopo-scotland-precip-accum"
 day_start_hour = 6
 day_end_hour = 18
 
+# See <https://datahub.metoffice.gov.uk/support/model-run-availability> for when to run this program
+expected_run_ts = datetime.combine(datetime.today(), time(hour=3), timezone.utc)
+
 
 def download(out: str):
     resp = requests.get(
@@ -31,6 +35,12 @@ def download(out: str):
     if resp.status_code != 200:
         raise RuntimeError(f"got status {resp.status_code} requesting order data")
     data = resp.json()
+
+    for file in data["orderDetails"]["files"]:
+        raw_run_ts = file["runDateTime"]
+        run_ts = dateutil.parser.isoparse(raw_run_ts)
+        if run_ts != expected_run_ts:
+            raise RuntimeError(f"expected run not available: got {raw_run_ts}, expected {expected_run_ts}")
 
     to_download: list[str] = []
     for file in data["orderDetails"]["files"]:
