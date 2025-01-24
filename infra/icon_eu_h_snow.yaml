@@ -4,7 +4,7 @@ metadata:
   name: icon-eu-h-snow-job
   namespace: pt
 spec:
-  schedule: "40 11 * * *"
+  schedule: "13 6 * * *"
   jobTemplate:
     spec:
       template:

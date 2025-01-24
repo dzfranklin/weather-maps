@@ -4,7 +4,7 @@ metadata:
   name: met-precip-accum-job
   namespace: pt
 spec:
-  schedule: "40 11 * * *"
+  schedule: "31 5 * * *"
   jobTemplate:
     spec:
       template:
