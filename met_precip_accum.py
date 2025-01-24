@@ -134,7 +134,7 @@ if __name__ == "__main__":
                             base_ts.strftime('%Y%m%d') + "/" + date.strftime('%Y%m%d') + "/tilejson.json",
             })
 
-        versionMessage = f"Updated at {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M %Z')} to the {base_ts.strftime('%Y-%m-%d %H:%M %Z')} model run"
+        versionMessage = f"Updated at {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')} UTC to the {base_ts.strftime('%Y-%m-%d %H:%M')} UTC model run"
         with open(os.path.join(out_dir, "meta.json"), "w+") as f:
             f.write(json.dumps({
                 "modelRun": base_ts.isoformat()+"Z",
