@@ -122,7 +122,7 @@ if __name__ == "__main__":
             os.makedirs(date_out_dir, exist_ok=True)
 
             colorized_tif = os.path.join(colorized_dir, f"{date.strftime('%Y%m%d')}.tif")
-            util.gdaldem("color-relief", "-alpha", daytime_grib, "precip_accum_colormap.txt", colorized_tif)
+            util.gdaldem("color-relief", "-alpha", daytime_grib, "colormap_mm_precipitation.txt", colorized_tif)
 
             util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif, date_out_dir)
 

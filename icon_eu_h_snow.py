@@ -54,7 +54,7 @@ if __name__ == "__main__":
             "color-relief",
             "-alpha",
             os.path.join(data_dir, fname),
-            "h_snow_colormap.txt",
+            "colormap_meters_snow.txt",
             colorized_file,
         )
 
