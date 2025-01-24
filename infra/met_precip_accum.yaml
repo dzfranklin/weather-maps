@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: icon-eu-h-snow-job
+  name: met-precip-accum-job
   namespace: pt
 spec:
   schedule: "40 11 * * *"
@@ -10,10 +10,15 @@ spec:
       template:
         spec:
           containers:
-            - name: prepare
+            - name: main
               image: "ghcr.io/dzfranklin/weather-maps:latest"
-              command: [ "python", "icon_eu_h_snow.py" ]
+              command: [ "python", "met_precip_accum.py"]
               env:
+                - name: MET_ATMOSPHERIC_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: metoffice
+                      key: atmospheric_api_key
                 - name: BUNNY_KEY
                   valueFrom:
                     secretKeyRef:

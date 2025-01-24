@@ -7,3 +7,5 @@ Dockerfile
 .git
 .github
 infra
+.venv
+__pycache__
