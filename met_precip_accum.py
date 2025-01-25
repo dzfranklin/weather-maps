@@ -147,7 +147,7 @@ if __name__ == "__main__":
         versionMessage = f"Updated at {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')} UTC to the {base_ts.strftime('%Y-%m-%d %H:%M')} UTC model run"
         with open(os.path.join(out_dir, "meta.json"), "w+") as f:
             f.write(json.dumps({
-                "modelRun": base_ts.isoformat()+"Z",
+                "modelRun": base_ts.isoformat() + "Z",
                 "dates": dates,
                 "versionMessage": versionMessage,
             }, indent=2))
@@ -157,7 +157,7 @@ if __name__ == "__main__":
         f.write(util.colormap.html_legend("colormap_mm_precipitation.txt"))
 
     for local_path in glob(f"{out_dir}/**/*", recursive=True):
-        if local_path.endswith("/meta.json") or not os.path.isfile(local_path):
+        if local_path.endswith("/meta.json") or local_path.endswith("/legend.html") or not os.path.isfile(local_path):
             continue
         remote_path = local_path.replace(out_dir, "").strip("/")
         bunny.weather_storage_upload(
@@ -168,7 +168,10 @@ if __name__ == "__main__":
                                  "met_scotland_daytime_average_precipitation_accumulation/meta.json")
     bunny.purge("https://plantopo-weather.b-cdn.net/met_scotland_daytime_average_precipitation_accumulation/meta.json")
 
-    bunny.purge("https://plantopo-weather.b-cdn.net/met_scotland_daytime_average_precipitation_accumulation/legend.html")
+    bunny.weather_storage_upload(os.path.join(out_dir, "legend.html"),
+                                 "met_scotland_daytime_average_precipitation_accumulation/legend.html")
+    bunny.purge(
+        "https://plantopo-weather.b-cdn.net/met_scotland_daytime_average_precipitation_accumulation/legend.html")
 
     bunny.weather_storage_delete_old("met_scotland_daytime_average_precipitation_accumulation/")
 
