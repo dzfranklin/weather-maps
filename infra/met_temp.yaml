@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: met-temp-job
+  namespace: pt
+spec:
+  schedule: "31 5 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: main
+              image: "ghcr.io/dzfranklin/weather-maps:latest"
+              command: [ "python", "met_temp.py"]
+              env:
+                - name: MET_ATMOSPHERIC_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: metoffice
+                      key: atmospheric_api_key
+                - name: BUNNY_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: bunny
+                      key: key
+                - name: BUNNY_WEATHER_STORAGE_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: bunny
+                      key: weather_storage_key
+          restartPolicy: OnFailure
