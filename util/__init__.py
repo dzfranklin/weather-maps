@@ -1,7 +1,8 @@
 import os
 import shutil
 import subprocess
-
+import datetime
+import metview as mv
 
 # 23.5°W–45.0°E, 29.5°N–70.5°N (https://www.dwd.de/EN/ourservices/nwp_forecast_data/nwp_forecast_data.html)
 # left, bottom, right, top
@@ -31,3 +32,25 @@ def remove_all_in(d: str):
             shutil.rmtree(entry)
         else:
             os.remove(entry)
+
+
+def fieldset_data_datetime(fs: mv.Fieldset) -> datetime.datetime:
+    l = fs.ls(no_print=True)
+    dates = l.dataDate
+    times = l.dataTime
+    assert len(dates) == len(times)
+    assert len(dates) > 0
+    for d in dates:
+        assert d == dates[0]
+    for t in times:
+        assert t == times[0]
+    return parse_numerical_timestamp(int(dates[0]), int(times[0]))
+
+
+def parse_numerical_timestamp(date: int, time: int) -> datetime.datetime:
+    year = date // 10 ** 4
+    month = (date - year * 10 ** 4) // 10 ** 2
+    day = date - year * 10 ** 4 - month * 10 ** 2
+    hour = time // 10**2
+    minute = time - hour * 10**2
+    return datetime.datetime(year, month, day, hour, minute)
