@@ -45,6 +45,10 @@ response_tmpl = """<!DOCTYPE html>
             overflow: auto;
             max-height: 4em;
         }
+        
+        .legend-layer-content {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>

@@ -158,7 +158,7 @@ class Colormap:
         for entry in self.entries:
             out += ('<span style="' + entry_style + '">')
 
-            out += '<span style="'
+            out += '<span class="legend-layer-content" style="'
             out += ('display: inline-block; ' +
                     'width: 10px; ' +
                     'height: calc(100% - 2px); ' +
