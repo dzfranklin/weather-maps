@@ -112,7 +112,7 @@ if __name__ == "__main__":
             mv.write(grib_file, fs)
 
             colorized_tif = os.path.join(colorized_dir, f"{date_name}_{name}.tif")
-            util.gdaldem("color-relief", "-alpha", grib_file, "colormap_wind_miles_per_hour.txt", colorized_tif)
+            util.colorize(grib_file, "colormaps/wind_mph.txt", colorized_tif)
 
             util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif,
                             name_out_dir)
@@ -155,7 +155,7 @@ if __name__ == "__main__":
             mv.write(grib_file, fs)
 
             colorized_tif = os.path.join(colorized_dir, f"{date_name}_{name}.tif")
-            util.gdaldem("color-relief", "-alpha", grib_file, "colormap_wind_miles_per_hour.txt", colorized_tif)
+            util.colorize(grib_file, "colormaps/wind_mph.txt", colorized_tif)
 
             util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif,
                             name_out_dir)
@@ -199,7 +199,7 @@ if __name__ == "__main__":
 
     legend_path = os.path.join(out_dir, "legend.html")
     with open(legend_path, "w+") as f:
-        f.write(util.colormap.html_legend("colormap_wind_miles_per_hour.txt"))
+        f.write(util.colormap.html_legend("colormaps/wind_mph.txt"))
 
     for root, _dirs, files in os.walk(run_dir):
         for fname in files:

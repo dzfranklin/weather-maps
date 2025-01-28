@@ -7,6 +7,7 @@ import shutil
 import sys
 import tempfile
 from datetime import datetime, timezone
+import metview as mv
 
 import util.colormap
 from util import icon_eu_tilejson_bounds, bunny
@@ -17,6 +18,8 @@ if __name__ == "__main__":
     else:
         out_dir = sys.argv[1]
     util.ensure_empty_dir(out_dir)
+
+    scratch_dir = tempfile.mkdtemp()
 
     data_dir = tempfile.mkdtemp()
     util.downloader_dwd(
@@ -49,14 +52,13 @@ if __name__ == "__main__":
         hour_dir = os.path.join(run_dir, hour)
         os.makedirs(hour_dir, exist_ok=True)
 
+        grib_path = os.path.join(scratch_dir, fname)
+        # convert meters to centimeters
+        fs = mv.Fieldset(path=os.path.join(data_dir, fname)) * 100
+        mv.write(grib_path, fs)
+
         colorized_file = f"{hour}_colorized.tif"
-        util.gdaldem(
-            "color-relief",
-            "-alpha",
-            os.path.join(data_dir, fname),
-            "colormap_meters_snow.txt",
-            colorized_file,
-        )
+        util.colorize(grib_path, "colormaps/snow_depth_cm.txt", colorized_file)
 
         util.gdal2tiles(
             "--zoom=1-5",
@@ -95,7 +97,7 @@ if __name__ == "__main__":
 
     legend_path = os.path.join(out_dir, "legend.html")
     with open(legend_path, "w+") as f:
-        f.write(util.colormap.html_legend("colormap_meters_snow.txt"))
+        f.write(util.colormap.html_legend("colormaps/snow_depth_cm.txt"))
 
     for root, _dirs, files in os.walk(run_dir):
         for fname in files:

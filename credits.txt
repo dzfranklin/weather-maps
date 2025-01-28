@@ -1,5 +1,1 @@
-Some weather color schemes adapted from maps by the Met Office. See for example
-https://weather.metoffice.gov.uk/maps-and-charts/uk-weather-map and
-https://www.metoffice.gov.uk/blog/2023/no-need-to-see-red-over-met-office-colour-scale
-
-Some weather color schemes adapted from windy.com
+Some colormaps are based on color scales developed by others. See the individual files for attribution.

@@ -122,7 +122,7 @@ if __name__ == "__main__":
             os.makedirs(date_out_dir, exist_ok=True)
 
             colorized_tif = os.path.join(colorized_dir, f"{date.strftime('%Y%m%d')}.tif")
-            util.gdaldem("color-relief", "-alpha", daytime_grib, "colormap_mm_precipitation.txt", colorized_tif)
+            util.colorize(daytime_grib, "colormaps/precip_mm_per_h.txt", colorized_tif)
 
             util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif, date_out_dir)
 
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     legend_path = os.path.join(out_dir, "legend.html")
     with open(legend_path, "w+") as f:
-        f.write(util.colormap.html_legend("colormap_mm_precipitation.txt"))
+        f.write(util.colormap.html_legend("colormaps/precip_mm_per_h.txt"))
 
     for local_path in glob(f"{out_dir}/**/*", recursive=True):
         if local_path.endswith("/meta.json") or local_path.endswith("/legend.html") or not os.path.isfile(local_path):

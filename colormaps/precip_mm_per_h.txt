@@ -1,0 +1,13 @@
+# Based on rain scale at <https://weather.metoffice.gov.uk/maps-and-charts/uk-weather-map>
+
+# units: mm/h
+
+0,0,0,0,0
+0.01,240,100,50
+0.5,225,99,60
+1,196,99,52
+2,120,100,32
+4,48,100,50
+8,36,100,50
+16,0,100,50
+32,0,100,35
