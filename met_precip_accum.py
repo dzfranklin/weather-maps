@@ -124,7 +124,7 @@ if __name__ == "__main__":
             colorized_tif = os.path.join(colorized_dir, f"{date.strftime('%Y%m%d')}.tif")
             util.colorize(daytime_grib, "colormaps/precip_mm_per_h.txt", colorized_tif)
 
-            util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif, date_out_dir)
+            util.generate_tiles(colorized_tif, date_out_dir, max_zoom=8)
 
             tilejson = {
                 "tiles": [

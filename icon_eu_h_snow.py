@@ -60,14 +60,7 @@ if __name__ == "__main__":
         colorized_file = f"{hour}_colorized.tif"
         util.colorize(grib_path, "colormaps/snow_depth_cm.txt", colorized_file)
 
-        util.gdal2tiles(
-            "--zoom=1-5",
-            "--tilesize=512",
-            "--xyz",
-            "--webviewer=none",
-            colorized_file,
-            hour_dir,
-        )
+        util.generate_tiles(colorized_file, hour_dir)
 
         tilejson = {
             "tiles": ["https://plantopo-weather.b-cdn.net/icon_eu_h_snow/" + run + "/" + hour + "/{z}/{x}/{y}.png"],

@@ -110,8 +110,7 @@ if __name__ == "__main__":
                 colorized_tif = os.path.join(colorized_dir, f"{date_name}_{name}.tif")
                 util.colorize(grib_file, "colormaps/temp_c.txt", colorized_tif)
 
-                util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif,
-                                name_out_dir)
+                util.generate_tiles(colorized_tif, name_out_dir, max_zoom=8)
 
                 tilejson = {
                     "tiles": [
@@ -151,8 +150,7 @@ if __name__ == "__main__":
                 colorized_tif = os.path.join(colorized_dir, f"{date_name}_{name}.tif")
                 util.colorize(grib_file, "colormaps/temp_c.txt", colorized_tif)
 
-                util.gdal2tiles("--zoom=1-8", "--tilesize=512", "--xyz", "--webviewer=none", colorized_tif,
-                                name_out_dir)
+                util.generate_tiles(colorized_tif, name_out_dir, max_zoom=8)
 
                 tilejson = {
                     "tiles": [

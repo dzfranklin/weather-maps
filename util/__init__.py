@@ -31,8 +31,23 @@ def colorize(source_path: str, colormap_path: str, output_path: str):
         ])
 
 
-def gdal2tiles(*args):
-    subprocess.run(["gdal2tiles.py", *args], check=True)
+def generate_tiles(
+        input_path: str,
+        output_path: str,
+        *,
+        min_zoom=1,
+        max_zoom=5,
+):
+    subprocess.run([
+        "gdal2tiles.py",
+        "--zoom=" + str(min_zoom) + "-" + str(max_zoom),
+        "--resampling=near",  # since we have categorical data
+        "--tilesize=512",  # the modern default
+        "--xyz",  # the modern default
+        "--webviewer=none",
+        input_path,
+        output_path,
+    ], check=True)
 
 
 def downloader_dwd(*args):
